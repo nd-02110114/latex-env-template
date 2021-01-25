@@ -1,0 +1,64 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+env:
+  ARTIFACT_NAME: main.pdf
+  DOCKER_IMAGE_NAME: nd02110114/latex-env-template
+  # Google Driveへアップロードをするかどうか
+  DRIVE_UPLOAD: false
+  # Google Driveのアップロード先のディレクトリ
+  DRIVE_BASE_DIR: /XXX/XXXX
+
+jobs:
+  release:
+    runs-on: ubuntu-18.04
+    container:
+      image: ${{ env.DOCKER_IMAGE_NAME }}:latest
+      options: --user root -v ${{ github.workspace }}:/workdir
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Create PDF
+        run: latexmk -l main.tex
+      - name: Setup the file name for tag release
+        id: get_filename
+        run: echo ::set-output name=filename::main_${GITHUB_REF#refs/tags/}.pdf
+      - name: Rename PDF
+        run: mv ${{ env.ARTIFACT_NAME }} ${{ steps.get_filename.outputs.filename }}
+      # Releaseを作成する
+      # https://github.com/YOURNAME/YOURREPO/releases に 'Release タグ名' で作成
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      # 作成したReleaseにPDFをアップロードする
+      - name: Upload release asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          # アップロードするファイルを変更する場合、以下を変える
+          asset_path: ./${{ steps.get_filename.outputs.filename }}
+          asset_name: ${{ steps.get_filename.outputs.filename }}
+          asset_content_type: application/pdf
+      - name: Upload to Google Drive
+        if: ${{ env.DRIVE_UPLOAD }} == true
+        uses: wei/rclone@v1
+        env:
+          RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+        with:
+          args: sync ${{ steps.get_filename.outputs.filename }} googledrive:${{ env.DRIVE_BASE_DIR }}/tags

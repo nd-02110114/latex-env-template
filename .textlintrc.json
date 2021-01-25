@@ -1,0 +1,17 @@
+{
+    "plugins": ["latex2e"],
+    "filters": {
+        "comments": {
+            "enablingComment": "textlint-enable",
+            "disablingComment": "textlint-disable"
+        }
+    },
+    "rules": {
+        "ginger": true,
+        "prh": {
+            "rulePaths": [
+                "./prh.yml"
+            ]
+        }
+    }
+}

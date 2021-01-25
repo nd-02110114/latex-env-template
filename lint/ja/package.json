@@ -1,0 +1,17 @@
+{
+    "name": "latex-env-template",
+    "scripts": {
+        "lint": "textlint */*.tex",
+        "fix": "textlint --fix */*.tex",
+        "lint-style": "textlint -f checkstyle */*.tex"
+    },
+    "dependencies": {
+        "@textlint-ja/textlint-rule-morpheme-match": "^1.0.2",
+        "textlint": "^11.8.1",
+        "textlint-plugin-latex2e": "^1.0.6",
+        "textlint-filter-rule-allowlist": "^2.0.1",
+        "textlint-filter-rule-comments": "^1.2.2",
+        "textlint-rule-ja-official-documents": "github:yabuuchi-hiroaki/textlint-rule-ja-official-documents",
+        "textlint-rule-preset-ja-technical-writing": "^4.0.1"
+    }
+}
