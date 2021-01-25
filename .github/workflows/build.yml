@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-18.04
     container:
       # セキュリティの関係で、環境変数でイメージを切り替えることはできない
-      # https://github.community/t/how-to-use-env-with-container-image/17252/2
+      # https://github.community/t/how-to-use-env-with-container-image/17252/16
       image: nd02110114/latex-env-template:latest
       options: --user root -v ${{ github.workspace }}:/workdir
     steps:
