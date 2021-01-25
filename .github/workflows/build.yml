@@ -7,14 +7,15 @@ on:
 
 env:
   ARTIFACT_NAME: main.pdf
-  DOCKER_IMAGE: nd02110114/latex-env-template
-  DRIVE_UPLOAD: false  # Google Driveへアップロードをするかどうか
+  DRIVE_UPLOAD: ${{ false }}  # Google Driveへアップロードをするかどうか
   DRIVE_BASE_DIR: /XXX/XXXX  # Google Driveのアップロード先のディレクトリ
 
 jobs:
   build:
     runs-on: ubuntu-18.04
     container:
+      # セキュリティの関係で、環境変数でイメージを切り替えることはできない
+      # https://github.community/t/how-to-use-env-with-container-image/17252/2
       image: nd02110114/latex-env-template:latest
       options: --user root -v ${{ github.workspace }}:/workdir
     steps:
@@ -30,7 +31,7 @@ jobs:
           name: pdf
           path: ./${{ env.ARTIFACT_NAME }}
       - name: Upload to Google Drive
-        if: ${{ env.DRIVE_UPLOAD }} == true
+        if: ${{ env.DRIVE_UPLOAD == true }}
         uses: wei/rclone@v1
         env:
           RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
