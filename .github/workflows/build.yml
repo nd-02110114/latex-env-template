@@ -7,17 +7,15 @@ on:
 
 env:
   ARTIFACT_NAME: main.pdf
-  DOCKER_IMAGE_NAME: nd02110114/latex-env-template
-  # Google Driveへアップロードをするかどうか
-  DRIVE_UPLOAD: false
-  # Google Driveのアップロード先のディレクトリ
-  DRIVE_BASE_DIR: /XXX/XXXX
+  DOCKER_IMAGE: nd02110114/latex-env-template
+  DRIVE_UPLOAD: false  # Google Driveへアップロードをするかどうか
+  DRIVE_BASE_DIR: /XXX/XXXX  # Google Driveのアップロード先のディレクトリ
 
 jobs:
   build:
     runs-on: ubuntu-18.04
     container:
-      image: ${{ env.DOCKER_IMAGE_NAME }}:latest
+      image: ${{ env.DOCKER_IMAGE }}:latest
       options: --user root -v ${{ github.workspace }}:/workdir
     steps:
       - name: Checkout
