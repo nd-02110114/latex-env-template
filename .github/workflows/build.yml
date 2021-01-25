@@ -15,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-18.04
     container:
-      image: ${{ env.DOCKER_IMAGE }}:latest
+      image: nd02110114/latex-env-template:latest
       options: --user root -v ${{ github.workspace }}:/workdir
     steps:
       - name: Checkout
