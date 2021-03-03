@@ -7,8 +7,8 @@ on:
 
 env:
   ARTIFACT_NAME: main.pdf
-  DRIVE_UPLOAD: ${{ false }}  # Google Driveへアップロードをするかどうか
-  DRIVE_BASE_DIR: /XXX/XXXX  # Google Driveのアップロード先のディレクトリ
+  DRIVE_UPLOAD: ${{ false }} # Google Driveへアップロードをするかどうか
+  DRIVE_BASE_DIR: /XXX/XXXX # Google Driveのアップロード先のディレクトリ
 
 jobs:
   release:
@@ -16,7 +16,7 @@ jobs:
     container:
       # セキュリティの関係で、環境変数でイメージを切り替えることはできない
       # # https://github.community/t/how-to-use-env-with-container-image/17252/16
-      image: nd02110114/latex-env-template:latest
+      image: nissydev/latex-env-template:latest
       options: --user root -v ${{ github.workspace }}:/workdir
     steps:
       - name: Checkout

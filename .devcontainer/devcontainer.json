@@ -1,7 +1,7 @@
 {
     "name": "book-dl4chem",
     // we use the image prebuilt by ./devcontainer/Dockerfile
-    "image": "nd02110114/latex-env-template",
+    "image": "nissydev/latex-env-template",
     "extensions": [
         "james-yu.latex-workshop",
     ],

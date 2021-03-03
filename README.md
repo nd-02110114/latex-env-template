@@ -8,8 +8,8 @@ Latexを書く環境のテンプレート (自分用)
 
 ```bash
 $ cd .devcontainer
-$ docker build . -t nd02110114/latex-env-template
-$ docker push nd02110114/latex-env-template
+$ docker build . -t nissydev/latex-env-template
+$ docker push nissydev/latex-env-template
 ```
 
 ### Lint
