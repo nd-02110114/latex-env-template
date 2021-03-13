@@ -5,7 +5,7 @@ ENV DEBCONF_NOWARNINGS=yes
 ENV PATH="/usr/local/texlive/2020/bin/x86_64-linux:$PATH"
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+    apt-get install -y \
     curl \
     make \
     wget \
@@ -21,7 +21,7 @@ RUN apt-get update && \
 
 # For latexindent
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends perl && \
+    apt-get install -y perl && \
     curl -L http://cpanmin.us | perl - App::cpanminus && \
     cpanm YAML::Tiny && \
     cpanm File::HomeDir && \
